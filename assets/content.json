@@ -1,0 +1,97 @@
+﻿{
+  "site": {
+    "title": "小狗和小咪的甜蜜小站",
+    "description": "记录我们的故事与新年祝福。",
+    "date": "2024年12月22日",
+    "signature": "狗咪日记",
+    "footer": "© 2026 小狗和小咪的故事"
+  },
+  "hero": {
+    "kicker": "爱你不止365天",
+    "headline": "新年快乐，亲爱的小咪❤️",
+    "subheadline": "与你相伴的每一天，我的世界都闪闪发光。",
+    "scrollHint": "向下滑动"
+  },
+  "letter": {
+    "title": "这一年的心里话",
+    "paragraphs": [
+      "谢谢你让平凡的日子发光。",
+      "希望以后每个新年，我们都能把新的故事放进这座小站里。"
+    ]
+  },
+  "timeline": {
+    "title": "一起走过的时光",
+    "items": [
+      {
+        "year": "2023",
+        "date": "2023-06-18",
+        "title": "第一次一起看海",
+        "text": "那天风很轻，你在海边笑的样子我一直记着。",
+        "media": [
+          {
+            "type": "image",
+            "src": "assets/media/2023-01.jpg",
+            "alt": "海边合照",
+            "caption": "夏天的海风"
+          }
+        ]
+      },
+      {
+        "year": "2024",
+        "date": "2024-01-01",
+        "title": "一起跨年的夜晚",
+        "text": "从烟花到星光，我们把愿望写在彼此眼里。",
+        "media": [
+          {
+            "type": "image",
+            "src": "assets/media/2024-01.jpg",
+            "alt": "跨年夜",
+            "caption": "新年的第一张合影"
+          }
+        ]
+      },
+      {
+        "year": "2025",
+        "date": "2025-10-01",
+        "title": "一路旅行的秋天",
+        "text": "每一段路都有你，所以一切都值得。",
+        "media": [
+          {
+            "type": "image",
+            "src": "assets/media/2025-01.jpg",
+            "alt": "旅行合照",
+            "caption": "秋日小城"
+          }
+        ]
+      }
+    ]
+  },
+  "gallery": {
+    "title": "照片墙",
+    "items": [
+      {
+        "src": "assets/media/gallery-01.jpg",
+        "alt": "甜蜜瞬间",
+        "caption": "随手的幸福"
+      },
+      {
+        "src": "assets/media/gallery-02.jpg",
+        "alt": "并肩走路",
+        "caption": "街角"
+      },
+      {
+        "src": "assets/media/gallery-03.jpg",
+        "alt": "节日合照",
+        "caption": "我们的笑容"
+      }
+    ]
+  },
+  "final": {
+    "title": "下一页，是我们",
+    "paragraphs": [
+      "把未来也交给我们一起完成吧。",
+      "明年，我们继续把新的故事写进这里。"
+    ],
+    "signature": "狗咪日记"
+  }
+}
