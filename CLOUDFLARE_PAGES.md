@@ -28,3 +28,30 @@ Click Deploy.
 
 - Open `https://diary-of-dog-and-cat.pages.dev/assets/content.json` to verify latest content.
 - If you see old content, wait for the new deploy, then hard refresh (Ctrl+F5).
+
+## Temporary public access (LocalTunnel)
+
+This is a fast, temporary way to share the site with people not on your LAN.
+
+1. Start a local server (Window A):
+
+```
+cd D:\Postgraduate\dmm\other\2026
+python -m http.server 8000
+```
+
+2. Create a tunnel (Window B):
+
+```
+npx localtunnel --port 8000
+```
+
+3. Share this URL (append `/love-site/`):
+
+```
+https://<random>.loca.lt/love-site/
+```
+
+Notes:
+- Keep both windows open. If you close them, the link stops working.
+- First run may prompt to install localtunnel (type `y`).
