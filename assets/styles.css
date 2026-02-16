@@ -191,6 +191,112 @@ main {
   margin-bottom: 0;
 }
 
+.story-panel {
+  background: linear-gradient(160deg, rgba(255, 250, 247, 0.94), rgba(255, 239, 230, 0.92));
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  padding: 22px;
+  border: 1px solid rgba(232, 164, 160, 0.25);
+}
+
+.gallery-note {
+  margin-bottom: 16px;
+}
+
+.story-rich {
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 18px;
+  padding: 22px;
+  line-height: 1.9;
+  color: var(--ink);
+}
+
+.story-rich h1,
+.story-rich h2,
+.story-rich h3,
+.story-rich h4,
+.story-rich h5,
+.story-rich h6 {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  color: var(--accent-strong);
+}
+
+.story-rich h3 {
+  font-size: 1.45rem;
+}
+
+.story-rich h4 {
+  font-size: 1.2rem;
+}
+
+.story-rich p {
+  margin: 0 0 14px;
+}
+
+.story-rich p:last-child {
+  margin-bottom: 0;
+}
+
+.story-rich strong {
+  color: #b4534d;
+}
+
+.story-rich em {
+  color: var(--muted);
+}
+
+.story-rich blockquote {
+  margin: 14px 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  background: rgba(232, 164, 160, 0.1);
+  border-radius: 10px;
+}
+
+.story-rich ul,
+.story-rich ol {
+  margin: 0 0 14px;
+  padding-left: 22px;
+}
+
+.story-rich li {
+  margin: 4px 0;
+}
+
+.story-rich code {
+  background: rgba(232, 164, 160, 0.12);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+.story-table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+.story-rich table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 420px;
+  background: #fff;
+}
+
+.story-rich th,
+.story-rich td {
+  border: 1px solid rgba(232, 164, 160, 0.25);
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+.story-rich th {
+  background: rgba(244, 199, 134, 0.18);
+  color: #7a4a44;
+}
+
 .timeline-items {
   display: grid;
   gap: 28px;
@@ -241,6 +347,21 @@ main {
   margin: 0 0 12px;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.album-content {
+  display: grid;
+  gap: 14px;
+}
+
+.album-message {
+  background: linear-gradient(180deg, rgba(255, 247, 242, 0.96), rgba(255, 255, 255, 0.9));
+  border: 1px dashed rgba(221, 126, 119, 0.45);
+  box-shadow: 0 8px 18px rgba(72, 44, 37, 0.1);
+}
+
+.album-message p {
+  font-size: 0.96rem;
 }
 
 .timeline-header {
@@ -338,6 +459,46 @@ main {
   color: var(--accent-strong);
 }
 
+.memories-link {
+  margin-top: 22px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: linear-gradient(135deg, rgba(255, 235, 224, 0.94), rgba(255, 247, 241, 0.96));
+  border: 1px solid rgba(232, 164, 160, 0.35);
+  border-radius: 20px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.memories-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 34px rgba(92, 55, 45, 0.26);
+}
+
+.memories-kicker {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.memories-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: #b45e58;
+}
+
+.memories-text {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+}
+
 .footer {
   display: flex;
   justify-content: space-between;
@@ -426,9 +587,55 @@ main {
   .timeline-item:nth-child(even) .timeline-body {
     order: 2;
   }
+
+  .album-content {
+    grid-template-columns: minmax(220px, 280px) 1fr;
+    align-items: start;
+  }
+
+  .album-message {
+    position: sticky;
+    top: 14px;
+  }
 }
 
 @media (max-width: 640px) {
+  .section {
+    padding: 56px 14px;
+  }
+
+  .story-panel {
+    padding: 14px;
+  }
+
+  .story-rich {
+    padding: 16px;
+  }
+
+  .media-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .media-grid figure {
+    padding: 6px;
+    border-radius: 12px;
+  }
+
+  .media-grid img,
+  .media-grid video {
+    border-radius: 8px;
+  }
+
+  .album {
+    padding: 14px;
+  }
+
   .bgm-player {
     left: 16px;
     right: 16px;

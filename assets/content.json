@@ -1,20 +1,20 @@
 {
   "site": {
-    "title": "狗咪影集",
-    "description": "把 2025-2026 的故事装进影集里。",
-    "date": "2026年2月15日",
+    "title": "狗咪的幸福日记",
+    "description": "在一起的每一天，我们都闪闪发光",
+    "date": "2026年2月16日",
     "signature": "小狗 & 小咪",
     "footer": "© 2026 狗咪日记"
   },
   "hero": {
     "kicker": "爱你不止365天",
-    "headline": "2025-2026 月度影集",
+    "headline": "2025-2026 幸福瞬间",
     "subheadline": "这一年的每一站，都有你在身边。",
     "scrollHint": "开始翻阅"
   },
   "bgm": {
-    "src": "assets/media/2025.11/咪咪的第四次探亲之旅-巴厘岛、东山岛与花棉袄/436e31e4e6ea7b622fa05a9f65424163.mp4",
-    "title": "巴厘岛的海风",
+    "src": "assets/media/bgm/林依晨 - 恶作剧.mp3",
+    "title": "林依晨 - 恶作剧",
     "hint": "点击播放",
     "autoplay": true,
     "loop": true,
@@ -928,5 +928,19 @@
       "下一次见面，我们继续更新这本影集。"
     ],
     "signature": "永远爱你，小狗"
+  },
+  "extras": {
+    "yearReviewFiles": [
+      "assets/小咪&小狗的年终总结.md",
+      "assets/小咪&小狗的年终总结.md.txt",
+      "assets/小咪&小狗的年终总结.txt"
+    ],
+    "outlookFiles": [
+      "assets/小咪&小狗的信念展望.md",
+      "assets/小咪&小狗的新年展望.md",
+      "assets/小咪&小狗的新年展望.md.txt",
+      "assets/小咪&小狗的新年展望.txt"
+    ],
+    "oldMemoriesVideo": "assets/小咪小狗的往年精彩/97138a2be9dca643665331b5067f1d90.mp4"
   }
 }
