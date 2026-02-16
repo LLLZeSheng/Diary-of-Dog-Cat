@@ -52,6 +52,9 @@ const escapeHtml = (value) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
+const looksLikeHtmlDocument = (text = "") =>
+  /<!doctype\s+html|<html[\s>]|<head[\s>]|<body[\s>]/i.test(text);
+
 const formatInlineMarkdown = (text = "") => {
   let html = escapeHtml(text);
   html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
@@ -380,7 +383,10 @@ const fetchTextFromCandidates = async (paths = []) => {
     try {
       const response = await fetch(encodePath(path), { cache: "no-store" });
       if (!response.ok) continue;
+      const contentType = (response.headers.get("content-type") || "").toLowerCase();
       const text = (await response.text()).trim();
+      if (contentType.includes("text/html") && looksLikeHtmlDocument(text)) continue;
+      if (looksLikeHtmlDocument(text)) continue;
       if (text) return text;
     } catch {
       // Ignore missing candidate and continue.
@@ -565,24 +571,30 @@ const loadContent = async () => {
 
 const applyContent = async (content) => {
   if (!content) return;
+  const site = content.site || {};
+  const hero = content.hero || {};
+  const letter = content.letter || {};
+  const timeline = content.timeline || {};
+  const gallery = content.gallery || {};
+  const final = content.final || {};
 
-  document.title = safeText(content.site?.title, document.title);
-  applyText("[data-hero-kicker]", content.hero?.kicker);
-  applyText("[data-hero-title]", content.hero?.headline);
-  applyText("[data-hero-sub]", content.hero?.subheadline);
-  applyText("[data-hero-date]", content.site?.date);
-  applyText("[data-hero-sign]", content.site?.signature);
-  applyText("[data-scroll-hint]", content.hero?.scrollHint);
+  document.title = safeText(site.title, document.title);
+  applyText("[data-hero-kicker]", hero.kicker);
+  applyText("[data-hero-title]", hero.headline);
+  applyText("[data-hero-sub]", hero.subheadline);
+  applyText("[data-hero-date]", site.date);
+  applyText("[data-hero-sign]", site.signature);
+  applyText("[data-scroll-hint]", hero.scrollHint);
 
-  applyText("[data-letter-title]", content.letter?.title);
-  applyParagraphs("[data-letter-body]", content.letter?.paragraphs);
+  applyText("[data-letter-title]", letter.title);
+  applyParagraphs("[data-letter-body]", letter.paragraphs);
 
-  applyText("[data-timeline-title]", content.timeline?.title);
-  const timelineItems = await enrichTimelineWithMessages(content.timeline?.items || []);
+  applyText("[data-timeline-title]", timeline.title);
+  const timelineItems = await enrichTimelineWithMessages(timeline.items || []);
   renderTimeline(timelineItems);
 
-  applyText("[data-gallery-title]", content.gallery?.title);
-  const galleryItems = content.gallery?.items || [];
+  applyText("[data-gallery-title]", gallery.title);
+  const galleryItems = gallery.items || [];
   renderGallery(galleryItems);
   const galleryMessage = await fetchTextFromCandidates(galleryMessageCandidates(galleryItems));
   if (galleryMessage) {
@@ -592,11 +604,11 @@ const applyContent = async (content) => {
     galleryNotePanel.hidden = true;
   }
 
-  applyText("[data-final-title]", content.final?.title);
-  applyParagraphs("[data-final-body]", content.final?.paragraphs);
-  applyText("[data-final-sign]", content.final?.signature);
+  applyText("[data-final-title]", final.title);
+  applyParagraphs("[data-final-body]", final.paragraphs);
+  applyText("[data-final-sign]", final.signature);
 
-  applyText("[data-footer-copy]", content.site?.footer);
+  applyText("[data-footer-copy]", site.footer);
   await renderExtraStories(content);
 
   setupBgm(content.bgm);
