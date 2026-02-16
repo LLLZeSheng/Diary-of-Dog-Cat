@@ -10,6 +10,7 @@ const createMediaElement = (item) => {
     const video = document.createElement("video");
     video.controls = true;
     video.preload = "metadata";
+    video.playsInline = true;
     if (item.poster) video.poster = item.poster;
     if (item.src) video.src = item.src;
     figure.appendChild(video);
@@ -30,7 +31,59 @@ const createMediaElement = (item) => {
   return figure;
 };
 
+const formatMediaCount = (media = []) => {
+  let images = 0;
+  let videos = 0;
+  media.forEach((item) => {
+    if (item.type === "video") videos += 1;
+    else images += 1;
+  });
+  const parts = [];
+  if (images) parts.push(`${images} 张照片`);
+  if (videos) parts.push(`${videos} 段视频`);
+  return parts.join(" · ");
+};
+
+const createAlbumElement = (album = {}) => {
+  const section = document.createElement("section");
+  section.className = "album";
+
+  const head = document.createElement("div");
+  head.className = "album-head";
+
+  const title = document.createElement("h4");
+  title.className = "album-title";
+  title.textContent = safeText(album.title, "影集");
+
+  head.appendChild(title);
+
+  const metaText = formatMediaCount(album.media || []);
+  if (metaText) {
+    const meta = document.createElement("span");
+    meta.className = "album-meta";
+    meta.textContent = metaText;
+    head.appendChild(meta);
+  }
+
+  section.appendChild(head);
+
+  if (album.description) {
+    const desc = document.createElement("p");
+    desc.className = "album-desc";
+    desc.textContent = album.description;
+    section.appendChild(desc);
+  }
+
+  const media = document.createElement("div");
+  media.className = "media-grid";
+  (album.media || []).forEach((item) => media.appendChild(createMediaElement(item)));
+  section.appendChild(media);
+
+  return section;
+};
+
 const renderTimeline = (items = []) => {
+  if (!timelineRoot) return;
   timelineRoot.innerHTML = "";
   items.forEach((entry) => {
     const card = document.createElement("article");
@@ -67,32 +120,32 @@ const renderTimeline = (items = []) => {
     body.appendChild(title);
     body.appendChild(text);
 
-    const media = document.createElement("div");
-    media.className = "media-grid";
-    (entry.media || []).forEach((item) => media.appendChild(createMediaElement(item)));
+    const albumList = document.createElement("div");
+    albumList.className = "album-list";
+
+    const albums = Array.isArray(entry.albums) ? entry.albums : [];
+    if (albums.length) {
+      albums.forEach((album) => albumList.appendChild(createAlbumElement(album)));
+    } else if (entry.media && entry.media.length) {
+      albumList.appendChild(
+        createAlbumElement({
+          title: entry.title || "影集",
+          media: entry.media,
+        })
+      );
+    }
 
     card.appendChild(body);
-    card.appendChild(media);
+    card.appendChild(albumList);
     timelineRoot.appendChild(card);
   });
 };
 
 const renderGallery = (items = []) => {
+  if (!galleryRoot) return;
   galleryRoot.innerHTML = "";
   items.forEach((item) => {
-    const figure = document.createElement("figure");
-    const img = document.createElement("img");
-    img.loading = "lazy";
-    img.src = item.src || "";
-    img.alt = safeText(item.alt, "回忆照片");
-    figure.appendChild(img);
-
-    if (item.caption) {
-      const caption = document.createElement("figcaption");
-      caption.textContent = item.caption;
-      figure.appendChild(caption);
-    }
-
+    const figure = createMediaElement(item);
     galleryRoot.appendChild(figure);
   });
 };
@@ -111,6 +164,67 @@ const applyParagraphs = (selector, paragraphs) => {
     p.textContent = text;
     el.appendChild(p);
   });
+};
+
+const setupBgm = (bgm) => {
+  const wrapper = document.querySelector("[data-bgm]");
+  const audio = document.getElementById("bgm-audio");
+  if (!wrapper || !audio || !bgm || !bgm.src) {
+    if (wrapper) wrapper.style.display = "none";
+    return;
+  }
+
+  audio.src = bgm.src;
+  audio.preload = "metadata";
+  audio.loop = bgm.loop !== false;
+
+  if (typeof bgm.volume === "number") {
+    audio.volume = Math.min(1, Math.max(0, bgm.volume));
+  }
+
+  const titleEl = wrapper.querySelector("[data-bgm-title]");
+  const hintEl = wrapper.querySelector("[data-bgm-hint]");
+  const toggle = wrapper.querySelector("[data-bgm-toggle]");
+
+  if (titleEl && bgm.title) titleEl.textContent = bgm.title;
+  if (hintEl && bgm.hint) hintEl.textContent = bgm.hint;
+
+  const setState = (playing) => {
+    wrapper.classList.toggle("is-playing", playing);
+    if (toggle) {
+      toggle.textContent = playing ? "暂停音乐" : "播放音乐";
+      toggle.setAttribute("aria-pressed", String(playing));
+    }
+  };
+
+  const tryPlay = () =>
+    audio.play().then(
+      () => setState(true),
+      () => setState(false)
+    );
+
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      if (audio.paused) {
+        tryPlay();
+      } else {
+        audio.pause();
+        setState(false);
+      }
+    });
+  }
+
+  audio.addEventListener("play", () => setState(true));
+  audio.addEventListener("pause", () => setState(false));
+
+  setState(!audio.paused && !audio.ended);
+
+  if (bgm.autoplay) {
+    tryPlay();
+    const attempt = () => tryPlay();
+    document.addEventListener("click", attempt, { once: true });
+    document.addEventListener("touchstart", attempt, { once: true });
+  }
 };
 
 const revealOnScroll = () => {
@@ -178,6 +292,8 @@ const applyContent = (content) => {
   applyText("[data-final-sign]", content.final?.signature);
 
   applyText("[data-footer-copy]", content.site?.footer);
+
+  setupBgm(content.bgm);
 };
 
 const init = async () => {

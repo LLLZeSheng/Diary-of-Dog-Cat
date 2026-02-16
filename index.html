@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>狗咪日记 | Diary of Dog and Cat</title>
-    <meta name="description" content="记录我们的故事与新年祝福。" />
+    <title>狗咪影集 | 2025-2026</title>
+    <meta name="description" content="把 2025-2026 的故事装进影集里。" />
     <meta name="theme-color" content="#f6d1c1" />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
@@ -71,6 +71,17 @@
       <a class="back-top" href="#top">回到顶部</a>
       <span class="footer-copy" data-footer-copy>© 2026 我们的故事</span>
     </footer>
+
+    <div class="bgm-player" data-bgm>
+      <button class="bgm-toggle" data-bgm-toggle type="button" aria-pressed="false">
+        播放音乐
+      </button>
+      <div class="bgm-text">
+        <span class="bgm-title" data-bgm-title>背景音乐</span>
+        <span class="bgm-hint" data-bgm-hint>点击播放</span>
+      </div>
+    </div>
+    <audio id="bgm-audio" preload="metadata"></audio>
 
     <script src="assets/app.js" defer></script>
   </body>
